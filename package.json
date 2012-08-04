@@ -1,0 +1,26 @@
+{
+  "name": "library",
+  "description": "A collection of plugins for use with Card-Catalog",
+  "version": "0.0.1",
+  "private": true,
+  "url": "http://github.com/TxSSC/Library",
+  "keywords": ["plugins"],
+  "dependencies": {
+    "cardcatalog": "0.0.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "mocha test/**"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:TxSSC/Library.git"
+  },
+  "main": "./cards/index.js",
+  "engines": {
+    "node": ">=0.6.x"
+  }
+}
