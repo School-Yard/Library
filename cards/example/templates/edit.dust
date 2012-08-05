@@ -1,0 +1,33 @@
+{>"layout.dust"/}
+
+{<content}
+
+  <h1>Edit User</h1>
+
+  <form action="/{category}/{card}/{user.id}" method="post">
+    <input type="hidden" name="_method" value="put"/>
+
+    <div class="field">
+      <label>Name:</label><br/>
+      <input type="text" name="user[name]" value="{user.name}">
+    </div>
+    
+    <div class="field">
+      <label>Title:</label><br/>
+      <input type="text" name="user[title]" value="{user.title}">
+    </div>
+
+    <div class="field">
+      <label>Email:</label><br/>
+      <input type="text" name="user[email]" value="{user.email}">
+    </div>
+
+    <div class="actions">
+      <input type="submit" value="Update">
+    </div>
+
+  </form>
+
+  <a href="/{category}/{card}">Back</a>
+
+{/content}

@@ -1,0 +1,25 @@
+{>"layout.dust"/}
+
+{<content}
+
+  <h1>Show User</h1>
+
+  <div class="field">
+    <label>ID:</label> {user.id}
+  </div>
+
+  <div class="field">
+    <label>Name:</label> {user.name}
+  </div>
+    
+  <div class="field">
+    <label>Title:</label> {user.title}
+  </div>
+
+  <div class="field">
+    <label>Email:</label> {user.email}
+  </div>
+
+  <a href="/{category}/{card}">Back</a>
+
+{/content}

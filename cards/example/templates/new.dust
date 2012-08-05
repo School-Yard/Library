@@ -1,0 +1,32 @@
+{>"layout.dust"/}
+
+{<content}
+
+  <h1>New User</h1>
+
+  <form action="/{category}/{card}" method="post">
+
+    <div class="field">
+      <label>Name:</label><br/>
+      <input type="text" name="user[name]">
+    </div>
+    
+    <div class="field">
+      <label>Title:</label><br/>
+      <input type="text" name="user[title]">
+    </div>
+
+    <div class="field">
+      <label>Email:</label><br/>
+      <input type="text" name="user[email]">
+    </div>
+
+    <div class="actions">
+      <input type="submit" value="Submit">
+    </div>
+
+  </form>
+
+  <a href="/{category}/{card}">Back</a>
+
+{/content}
