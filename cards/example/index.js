@@ -45,3 +45,20 @@ var Example = module.exports = function Example(options) {
 };
 
 util.inherits(Example, card_catalog.Card);
+
+/**
+ * Temporary Response Helpers
+ */
+Example.prototype.error = function error(req, res, err) {
+  this.emit('error', { res: res, status: 400, message: err });
+};
+
+Example.prototype.redirect = function redirect(req, res, path) {
+  res.writeHead(302, {'Location': path});
+  res.end();
+};
+
+Example.prototype.render = function render(req, res, html) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(html);
+};

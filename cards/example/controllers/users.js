@@ -24,21 +24,19 @@ var Users = module.exports;
 // GET - Index Page
 Users.index = function root(req, res) {
   var self = this,
-      category = req.category;
+      category = req.category,
+      data;
 
   this.User.all(function(err, users) {
-    var data = {
+    data = {
       users: users,
       category: category.slug,
       card: self.slug
     };
 
     dustfs.render('index.dust', data, function(err, html) {
-      if(err) console.log('Error: '+err);
-      else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
-      }
+      if(err) return self.error(req, res, err);
+      self.render(req, res, html);
     });
   });
 };
@@ -55,25 +53,22 @@ Users.new_form = function new_form(req, res) {
   };
 
   dustfs.render('new.dust', data, function(err, html) {
-    if(err) console.log('Error: '+err);
-    else {
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(html);
-    }
+    if(err) return self.error(req, res, err);
+    self.render(req, res, html);
   });
 };
 
 // POST - Create a new user
 Users.create = function create(req, res) {
   var self = this,
-      category = req.category;
+      category = req.category,
+      path;
 
   this.User.create(req.body.user, function(err, result) {
-    if(err) console.log('Error: ' + err);
+    if(err) return self.error(req, res, err);
 
-    var path = '/' + category.slug + '/' + self.slug;
-    res.writeHead(302, {'Location': path});
-    res.end();
+    path = '/' + category.slug + '/' + self.slug;
+    self.redirect(req, res, path);
   });
 };
 
@@ -81,27 +76,26 @@ Users.create = function create(req, res) {
 Users.show = function show(req, res, params) {
   var self = this,
       category = req.category,
-      id = params.id;
+      id = params.id,
+      path,
+      data;
 
   if(!id) {
-    var path = '/' + category.slug + '/' + self.slug;
-    res.writeHead(302, {'Location': path});
-    res.end();
-  } else {
+    path = '/' + category.slug + '/' + self.slug;
+    self.redirect(req, res, path);
+  }
+  else {
     this.User.get(id, function(err, result) {
 
-      var data = {
+      data = {
         user: result,
         category: category.slug,
         card: self.slug
       };
 
       dustfs.render('show.dust', data, function(err, html) {
-        if(err) console.log('Error: '+err);
-        else {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(html);
-        }
+        if(err) return self.error(req, res, err);
+        self.render(req, res, html);
       });
     });
   }
@@ -111,27 +105,26 @@ Users.show = function show(req, res, params) {
 Users.edit = function edit(req, res, params) {
   var self = this,
       category = req.category,
-      id = params.id;
+      id = params.id,
+      path,
+      data;
 
   if(!id) {
-    var path = '/' + category.slug + '/' + self.slug;
-    res.writeHead(302, {'Location': path});
-    res.end();
-  } else {
+    path = '/' + category.slug + '/' + self.slug;
+    self.redirect(req, res, path);
+  }
+  else {
     this.User.get(id, function(err, result) {
 
-      var data = {
+      data = {
         user: result,
         category: category.slug,
         card: self.slug
       };
 
       dustfs.render('edit.dust', data, function(err, html) {
-        if(err) console.log('Error: '+err);
-        else {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(html);
-        }
+        if(err) return self.error(req, res, err);
+        self.render(req, res, html);
       });
     });
   }
@@ -141,17 +134,19 @@ Users.edit = function edit(req, res, params) {
 Users.update = function update(req, res, params) {
   var self = this,
       category = req.category,
-      id = params.id;
+      id = params.id,
+      path;
 
   if(!id) {
-    var path = '/' + category.slug + '/' + self.slug;
-    res.writeHead(302, {'Location': path});
-    res.end();
-  } else {
+    path = '/' + category.slug + '/' + self.slug;
+    self.redirect(req, res, path);
+  }
+  else {
     this.User.update(id, req.body.user, function(err, result) {
-      var path = '/' + category.slug + '/' + self.slug + '/' + id;
-      res.writeHead(302, {'Location': path});
-      res.end();
+      if(err) return self.error(req, res, err);
+
+      path = '/' + category.slug + '/' + self.slug + '/' + id;
+      self.redirect(req, res, path);
     });
   }
 };
@@ -160,17 +155,19 @@ Users.update = function update(req, res, params) {
 Users.destroy = function destroy(req, res, params) {
   var self = this,
       category = req.category,
-      id = params.id;
+      id = params.id,
+      path;
 
   if(!id) {
-    var path = '/' + category.slug + '/' + self.slug;
-    res.writeHead(302, {'Location': path});
-    res.end();
-  } else {
+    path = '/' + category.slug + '/' + self.slug;
+    self.redirect(req, res, path);
+  }
+  else {
     this.User.destroy(id, function(err, result) {
-      var path = '/' + category.slug + '/' + self.slug;
-      res.writeHead(302, {'Location': path});
-      res.end();
+      if(err) return self.error(req, res, err);
+
+      path = '/' + category.slug + '/' + self.slug;
+      self.redirect(req, res, path);
     });
   }
 };
