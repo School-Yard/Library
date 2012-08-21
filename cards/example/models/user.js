@@ -1,10 +1,8 @@
 var User = module.exports = function User(options) {
   this.options = options || {};
 
-  var connection = options.connection;
-
   // Define a new resource
-  this.storage = connection.resource('users');
+  this.storage = options.adapters.mongo.resource('users');
 
   // Set some default values
   this._attributes = {
