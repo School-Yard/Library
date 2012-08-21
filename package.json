@@ -6,8 +6,8 @@
   "url": "http://github.com/TxSSC/Library",
   "keywords": ["plugins"],
   "dependencies": {
-    "cardcatalog": "0.0.2",
-    "dustfs": "0.0.6"
+    "cardcatalog": "0.0.x",
+    "dustfs": "0.0.x"
   },
   "devDependencies": {
     "mocha": "*",
