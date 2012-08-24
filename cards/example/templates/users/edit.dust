@@ -1,33 +1,43 @@
-{>"layout.dust"/}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Example Plugin</title>
+  <meta name="description" content="An example plugin using Card-Catalog">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+  <div id="content">
 
-{<content}
+    <h1>Edit User</h1>
 
-  <h1>Edit User</h1>
+    <form action="/{category}/{card}/{user.id}" method="post">
+      <input type="hidden" name="_method" value="put"/>
 
-  <form action="/{category}/{card}/{user.id}" method="post">
-    <input type="hidden" name="_method" value="put"/>
+      <div class="field">
+        <label>Name:</label><br/>
+        <input type="text" name="user[name]" value="{user.name}">
+      </div>
 
-    <div class="field">
-      <label>Name:</label><br/>
-      <input type="text" name="user[name]" value="{user.name}">
-    </div>
-    
-    <div class="field">
-      <label>Title:</label><br/>
-      <input type="text" name="user[title]" value="{user.title}">
-    </div>
+      <div class="field">
+        <label>Title:</label><br/>
+        <input type="text" name="user[title]" value="{user.title}">
+      </div>
 
-    <div class="field">
-      <label>Email:</label><br/>
-      <input type="text" name="user[email]" value="{user.email}">
-    </div>
+      <div class="field">
+        <label>Email:</label><br/>
+        <input type="text" name="user[email]" value="{user.email}">
+      </div>
 
-    <div class="actions">
-      <input type="submit" value="Update">
-    </div>
+      <div class="actions">
+        <input type="submit" value="Update">
+      </div>
 
-  </form>
+    </form>
 
-  <a href="/{category}/{card}">Back</a>
+    <a href="/{category}/{card}">Back</a>
 
-{/content}
+  </div>
+</body>
+</html>

@@ -1,40 +1,50 @@
-{>"layout.dust"/}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Example Plugin</title>
+  <meta name="description" content="An example plugin using Card-Catalog">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+  <div id="content">
 
-{<content}
-  
-  <h1>Listing Users</h1>
- 
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Title</th>
-      <th>Email</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+    <h1>Listing Users</h1>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Email</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      {#users}
+      <tr>
+        <td>{id}</td>
+        <td>{name}</td>
+        <td>{title}</td>
+        <td>{email}</td>
+        <td><a href="/{category}/{card}/{id}">Show</a> | </td>
+        <td><a href="/{category}/{card}/{id}/edit">Edit</a> | </td>
+        <td>
+          <form action="/{category}/{card}/{id}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit">Destroy</button>
+          </form>
+        </td>
+      </tr>
+      {/users}
+    </table>
+
+    <br />
    
-    {#users}
-    <tr>
-      <td>{id}</td>
-      <td>{name}</td>
-      <td>{title}</td>
-      <td>{email}</td>
-      <td><a href="/{category}/{card}/{id}">Show</a> | </td>
-      <td><a href="/{category}/{card}/{id}/edit">Edit</a> | </td>
-      <td>
-        <form action="/{category}/{card}/{id}" method="post">
-          <input type="hidden" name="_method" value="delete"/>
-          <button type="submit">Destroy</button>
-        </form>
-      </td>
-    </tr>
-    {/users}
-  </table>
- 
-  <br />
- 
-  <a href="/{category}/{card}/new">New User</a>
+    <a href="/{category}/{card}/new">New User</a>
 
-{/content}
+  </div>
+</body>
+</html>
