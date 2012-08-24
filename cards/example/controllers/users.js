@@ -5,10 +5,6 @@
  * a basic MVC structure.
  */
 
-// Set a location to use for templates with DustFS
-var dustfs = require('dustfs');
-dustfs.dirs(path.join(__dirname + '/../templates/users'));
-
 // Create an export object
 var Users = module.exports;
 
@@ -34,10 +30,7 @@ Users.index = function root(req, res) {
       card: self.slug
     };
 
-    dustfs.render('index.dust', data, function(err, html) {
-      if(err) return self.error(req, res, err);
-      self.render(req, res, html);
-    });
+    res.render('users/index', data);
   });
 };
 
@@ -52,10 +45,7 @@ Users.new_form = function new_form(req, res) {
     card: self.slug
   };
 
-  dustfs.render('new.dust', data, function(err, html) {
-    if(err) return self.error(req, res, err);
-    self.render(req, res, html);
-  });
+  res.render('users/new', data);
 };
 
 // POST - Create a new user
@@ -68,7 +58,7 @@ Users.create = function create(req, res) {
     if(err) return self.error(req, res, err);
 
     path = '/' + category.slug + '/' + self.slug;
-    self.redirect(req, res, path);
+    res.redirect(path);
   });
 };
 
@@ -82,7 +72,7 @@ Users.show = function show(req, res, params) {
 
   if(!id) {
     path = '/' + category.slug + '/' + self.slug;
-    self.redirect(req, res, path);
+    res.redirect(path);
   }
   else {
     this.User.get(id, function(err, result) {
@@ -93,10 +83,7 @@ Users.show = function show(req, res, params) {
         card: self.slug
       };
 
-      dustfs.render('show.dust', data, function(err, html) {
-        if(err) return self.error(req, res, err);
-        self.render(req, res, html);
-      });
+      res.render('users/show', data);
     });
   }
 };
@@ -111,7 +98,7 @@ Users.edit = function edit(req, res, params) {
 
   if(!id) {
     path = '/' + category.slug + '/' + self.slug;
-    self.redirect(req, res, path);
+    res.redirect(path);
   }
   else {
     this.User.get(id, function(err, result) {
@@ -122,10 +109,7 @@ Users.edit = function edit(req, res, params) {
         card: self.slug
       };
 
-      dustfs.render('edit.dust', data, function(err, html) {
-        if(err) return self.error(req, res, err);
-        self.render(req, res, html);
-      });
+      res.render('users/edit', data);
     });
   }
 };
@@ -139,14 +123,14 @@ Users.update = function update(req, res, params) {
 
   if(!id) {
     path = '/' + category.slug + '/' + self.slug;
-    self.redirect(req, res, path);
+    res.redirect(path);
   }
   else {
     this.User.update(id, req.body.user, function(err, result) {
       if(err) return self.error(req, res, err);
 
       path = '/' + category.slug + '/' + self.slug + '/' + id;
-      self.redirect(req, res, path);
+      res.redirect(path);
     });
   }
 };
@@ -160,14 +144,14 @@ Users.destroy = function destroy(req, res, params) {
 
   if(!id) {
     path = '/' + category.slug + '/' + self.slug;
-    self.redirect(req, res, path);
+    res.redirect(path);
   }
   else {
     this.User.destroy(id, function(err, result) {
       if(err) return self.error(req, res, err);
 
       path = '/' + category.slug + '/' + self.slug;
-      self.redirect(req, res, path);
+      res.redirect(path);
     });
   }
 };
