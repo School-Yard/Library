@@ -11,6 +11,7 @@
  */
 var card_catalog = require('cardcatalog'),
     util = require('util'),
+    consolidate = require('consolidate'),
     UsersController = require('./controllers/users'),
     User = require('./models/user');
 
@@ -19,6 +20,10 @@ var Example = module.exports = function Example(options) {
 
   this.name = "Example"; // Required
   this.slug = "example"; // Required
+
+  // Set view rendering options
+  this.engine = ['dust', consolidate.dust];
+  this.templates = __dirname + '/templates';
 
   this.User = new User({
     adapters: this.adapters
