@@ -9,25 +9,26 @@
     "vanetix <matmcfarland@gmail.com>"
   ],
   "url": "http://github.com/School-Yard/Library",
-  "keywords": ["plugins", "schoolyard-recess", "cardcatalog"],
+  "keywords": ["plugins", "schoolyard-recess", "schoolyard-cardcatalog"],
   "license" : "MIT",
   "dependencies": {
-    "cardcatalog": "0.0.x",
     "consolidate": "0.4.0",
-    "dustjs-linkedin": "1.0.x"
+    "dustjs-linkedin": "1.0.x",
+    "schoolyard-cardcatalog": "0.0.x",
+    "schoolyard-trapperkeeper": "0.0.x"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*"
   },
   "scripts": {
-    "test": "mocha test/**"
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:School-Yard/Library.git"
   },
-  "main": "./lib/index.js",
+  "main": "index.js",
   "engines": {
     "node": ">=0.6.x"
   }
