@@ -5,10 +5,9 @@ module.exports = function(options) {
   var Article = function(attrs) {
     this._resource = _resource;
 
-    this._id = null;
-
     // Set some default values
     this._attributes = {
+      id: null,
       title: '',
       slug: '',
       user: '',
@@ -97,17 +96,17 @@ module.exports = function(options) {
   Article.prototype.save = function(callback) {
     var self = this;
 
-    if(!this._id) {
-      // Create a new article since this._id doesn't exist
+    if(!this.get('id')) {
+      // Create a new article since id doesn't exist
       this._resource.create(this._attributes, function(err, article) {
         if(err) return callback(err);
-        self._id = article.id;
+        self._attributes.id = article.id;
         return callback(null, self);
       });
     }
     else {
       //Save the record
-      this._resource.save(this._id, this._attributes, function(err, article) {
+      this._resource.save(this.get('id'), this._attributes, function(err, article) {
         if(err) return callback(err);
         return callback(null, self);
       });
@@ -123,7 +122,7 @@ module.exports = function(options) {
    * @param {function} callback
    */
   Article.prototype.destroy = function(callback) {
-    this._resource.destroy(this._id, callback);
+    this._resource.destroy(this.get('id'), callback);
 
     return this;
   };
@@ -211,7 +210,7 @@ module.exports = function(options) {
    * @param {function} callback(err, result)
    */
   Article.get = function(id, callback) {
-    _resource.get({_id: id}, function(err, article) {
+    _resource.get(id, function(err, article) {
       if(err) return callback(err);
       if(!article) return callback(null, null);
       return callback(null, new Article(article));
