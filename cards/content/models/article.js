@@ -3,7 +3,7 @@ module.exports = function(options) {
   var _resource = options.adapter.mongo.resource('article');
 
   var Article = function(attrs) {
-    this.storage = _resource;
+    this._resource = _resource;
 
     this._id = null;
 
@@ -29,8 +29,8 @@ module.exports = function(options) {
       }
     };
 
-    // Be as vague as possible.
-    return Article.prototype.set.call(this, attrs);
+    if(typeof attrs === 'object') Article.prototype.set.call(this, attrs);
+    return this;
   };
 
   /**
@@ -99,7 +99,7 @@ module.exports = function(options) {
 
     if(!this._id) {
       // Create a new article since this._id doesn't exist
-      this.storage.create(this._attributes, function(err, article) {
+      this._resource.create(this._attributes, function(err, article) {
         if(err) return callback(err);
         self._id = article.id;
         return callback(null, self);
@@ -107,7 +107,7 @@ module.exports = function(options) {
     }
     else {
       //Save the record
-      this.storage.save(this._id, this._attributes, function(err, article) {
+      this._resource.save(this._id, this._attributes, function(err, article) {
         if(err) return callback(err);
         return callback(null, self);
       });
@@ -123,7 +123,7 @@ module.exports = function(options) {
    * @param {function} callback
    */
   Article.prototype.destroy = function(callback) {
-    this.storage.destroy(this._id, callback);
+    this._resource.destroy(this._id, callback);
 
     return this;
   };
@@ -172,7 +172,17 @@ module.exports = function(options) {
    *
    * @param {function} callback(err, results)
    */
-  Article.all = _resource.all;
+  Article.all = function(callback) {
+    _resource.all(function(err, results) {
+      if(err) return callback(err);
+
+      var articles = results.map(function(article) {
+        return new Article(article);
+      });
+
+      return callback(null, articles);
+    });
+  };
 
   /**
    * `Article.find`
@@ -181,7 +191,17 @@ module.exports = function(options) {
    * @param {object} conditions
    * @param {function} callback(err, results)
    */
-  Article.find = _resource.find;
+  Article.find = function(conditions, callback) {
+    _resource.find(conditions, function(err, results) {
+      if(err) return callback(err);
+
+      var articles = results.map(function(article) {
+        return new Article(article);
+      });
+
+      return callback(null, articles);
+    });
+  };
 
   /**
    * `Article.get`
@@ -190,7 +210,13 @@ module.exports = function(options) {
    * @param {string} id
    * @param {function} callback(err, result)
    */
-  Article.get = _resource.get;
+  Article.get = function(id, callback) {
+    _resource.get({_id: id}, function(err, article) {
+      if(err) return callback(err);
+      if(!article) return callback(null, null);
+      return callback(null, new Article(article));
+    });
+  };
 
   /**
    * `Article.create`
@@ -199,7 +225,12 @@ module.exports = function(options) {
    * @param {object} attrs
    * @param {function} callback
    */
-  Article.create = _resource.create;
+  Article.create = function(attrs, callback) {
+    _resource.create(attrs, function(err, article) {
+      if(err) return callback(err);
+      return callback(null, new Article(article));
+    });
+  };
 
   /**
    * `Article.destroy`
