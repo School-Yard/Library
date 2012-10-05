@@ -135,13 +135,52 @@ describe('Article', function() {
 
       article.save(done);
     });
+
     it('get should retrieve one record with matching id', function(done) {
       Article.get(article.get('id'), function(err, result) {
         should.not.exist(err);
         should.exist(result);
-
         result.get('id').should.equal(article.get('id'));
         return done();
+      });
+    });
+
+    it('find should retrieve multiple articles', function(done) {
+      Article.find({'title': article.get('title')}, function(err, results) {
+        should.not.exist(err);
+        should.exist(results);
+        results.should.be.instanceof(Array);
+        return done();
+      });
+    });
+
+    it('find all should return an array of articles', function(done) {
+      Article.all(function(err, results) {
+        should.not.exist(err);
+        should.exist(results);
+        results.should.be.instanceof(Array);
+        return done();
+      });
+    });
+
+    it('create should create an article and save', function(done) {
+      Article.create(attributes, function(err, article) {
+        should.not.exist(err);
+        should.exist(article.get('id'));
+        return done();
+      });
+    });
+
+    //Before making this fail (I think)
+    it('destroy should remove the article from mongo', function(done) {
+      Article.destroy(article.get('id'), function(err) {
+        should.not.exist(err);
+
+        Article.get(article.get('id'), function(err, article) {
+          should.not.exist(err);
+          should.not.exist(article);
+          return done();
+        });
       });
     });
     //End static function tests

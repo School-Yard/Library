@@ -1,3 +1,8 @@
-var Tests = module.exports = exports;
+var Tests = module.exports = exports,
+    Helpers = module.exports = exports;
 
-Tests.Model = require('./article');
+
+Tests.Models = {
+  Article: require('./article'),
+  Page: require('./page')
+};
