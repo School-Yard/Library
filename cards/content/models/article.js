@@ -96,6 +96,8 @@ module.exports = function(options) {
   Article.prototype.save = function(callback) {
     var self = this;
 
+    console.log(this.get('id') + ' - ' + this._attributes.id);
+
     if(!this.get('id')) {
       // Create a new article since id doesn't exist
       this._resource.create(this._attributes, function(err, article) {
@@ -139,6 +141,23 @@ module.exports = function(options) {
     this.save(callback);
 
     return this;
+  };
+
+  /**
+   * Return a copy of the attributes when encoding with
+   * JSON.stringify
+   *
+   * @return {object}
+   */
+  Article.prototype.toJSON = function() {
+    var obj,
+        attrs = this._attributes;
+
+    Object.keys(attrs).forEach(function(key) {
+      obj[key] = attrs[key];
+    });
+
+    return obj;
   };
 
   /**
