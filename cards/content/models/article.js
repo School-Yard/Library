@@ -96,8 +96,6 @@ module.exports = function(options) {
   Article.prototype.save = function(callback) {
     var self = this;
 
-    console.log(this.get('id') + ' - ' + this._attributes.id);
-
     if(!this.get('id')) {
       // Create a new article since id doesn't exist
       this._resource.create(this._attributes, function(err, article) {
