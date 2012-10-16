@@ -14,7 +14,6 @@
   "dependencies": {
     "cardcatalog": "0.0.x",
     "consolidate": "0.4.0",
-    "dustjs-linkedin": "1.0.x",
     "ejs": "0.8.x",
     "passport": "0.1.x",
     "passport-txssc": "git://github.com/TxSSC/passport-txssc.git"
